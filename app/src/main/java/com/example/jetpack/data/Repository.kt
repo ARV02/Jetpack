@@ -1,4 +1,9 @@
 package com.example.jetpack.data
 
-class Repository {
+import com.example.jetpack.data.network.ApiInterface
+import javax.inject.Inject
+
+class Repository @Inject constructor (private val api:ApiInterface){
+
+    suspend fun getUser() = api.login()
 }
