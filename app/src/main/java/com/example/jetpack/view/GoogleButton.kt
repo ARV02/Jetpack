@@ -24,7 +24,8 @@ import com.example.jetpack.R
 fun GoogleButton(
     text: String = "Sign Up with Google",
     loadingText: String = "Creating an account...",
-    icon: Painter = painterResource(id = R.drawable.ic_google_icon)
+    icon: Painter = painterResource(id = R.drawable.ic_google_icon),
+    onClicked: () -> Unit
 ){
     var clicked by remember { mutableStateOf(false) }
     Surface(
@@ -51,7 +52,7 @@ fun GoogleButton(
             horizontalArrangement = Arrangement.Center
         ) {
             Icon(painter = icon,
-                contentDescription = "GoogleButton",
+                contentDescription = "Google Button",
                 tint = Color.Unspecified
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -64,6 +65,7 @@ fun GoogleButton(
                     strokeWidth = 2.dp,
                     color = MaterialTheme.colors.primary
                 )
+                onClicked()
             }
         }
     }
@@ -73,5 +75,9 @@ fun GoogleButton(
 @Composable
 @Preview
 private fun GoogleButtonPreview(){
-    GoogleButton()
+    GoogleButton(
+        text = "Sign Up with Google",
+        loadingText = "Creating Account...",
+        onClicked = {}
+    )
 }

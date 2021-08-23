@@ -24,7 +24,8 @@ import com.example.jetpack.ui.theme.Shapes
 fun FacebookButton(
     text: String = "Sign Up with Facebook",
     loadingText: String = "Creating an account ...",
-    icon: Painter = painterResource(id = R.drawable.ic_facebook)
+    icon: Painter = painterResource(id = R.drawable.ic_facebook),
+    onClicked: () -> Unit
 ) {
     var clicked by remember { mutableStateOf(false)}
     Surface(
@@ -64,6 +65,7 @@ fun FacebookButton(
                     strokeWidth = 2.dp,
                     color = MaterialTheme.colors.primary
                 )
+                onClicked()
             }
         }
     }
@@ -73,5 +75,9 @@ fun FacebookButton(
 @Composable
 @Preview
 private fun FacebookButtonPreview(){
-    FacebookButton()
+    FacebookButton(
+        text = "Sign Up with Facebook",
+        loadingText = "Creating an account...",
+        onClicked = {}
+    )
 }

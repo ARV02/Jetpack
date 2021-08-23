@@ -2,15 +2,18 @@ package com.example.jetpack.view
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -19,23 +22,46 @@ import androidx.compose.ui.unit.dp
 import com.example.jetpack.R
 import com.example.jetpack.ui.theme.JetpackTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.InternalCoroutinesApi
 
-@AndroidEntryPoint
+//@AndroidEntryPoint
+@InternalCoroutinesApi
+@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //JetpackTheme {
-                PreviewMessageCard()
+            JetpackTheme {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                GoogleButton(
+                    text = "Sign Up with Google",
+                    loadingText = "Creating Account...",
+                    onClicked = {
+                        Log.i("Google button", "Clicked")
+                    }
+                )
+
+                FacebookButton(
+                    text = "Sign Up with Facebook",
+                    loadingText = "Creating an account...",
+                    onClicked = {
+                        Log.i("Facebook button", "Clicked")
+                    }
+                )
+            }
                 // A surface container using the 'background' color from the theme
                 //Surface(color = MaterialTheme.colors.background) {
                 //}
-           // }
+            }
         }
     }
 }
 
-data class Message(val name:String, val body:String)
+/*data class Message(val name:String, val body:String)
 
 @Composable
 fun MessageCard(msg: Message){
@@ -81,4 +107,4 @@ fun PreviewMessageCard(){
             msg = Message("Colleague", "Hey, take a look at Jetpack Compose, it's great!")
         )
     }
-}
+}*/
