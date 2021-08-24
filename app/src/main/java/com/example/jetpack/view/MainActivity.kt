@@ -9,14 +9,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetpack.R
@@ -31,37 +40,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetpackTheme {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                GoogleButton(
-                    text = "Sign Up with Google",
-                    loadingText = "Creating Account...",
-                    onClicked = {
-                        Log.i("Google button", "Clicked")
-                    }
-                )
+            PreviewMessageCard()
+            //JetpackTheme {
 
-                FacebookButton(
-                    text = "Sign Up with Facebook",
-                    loadingText = "Creating an account...",
-                    onClicked = {
-                        Log.i("Facebook button", "Clicked")
-                    }
-                )
-            }
+            //}
                 // A surface container using the 'background' color from the theme
                 //Surface(color = MaterialTheme.colors.background) {
                 //}
-            }
+            //}
         }
     }
 }
 
-/*data class Message(val name:String, val body:String)
+data class Message(val name:String, val body:String)
 
 @Composable
 fun MessageCard(msg: Message){
@@ -101,10 +92,71 @@ fun MessageCard(msg: Message){
 )
 
 @Composable
+@InternalCoroutinesApi
+@ExperimentalMaterialApi
 fun PreviewMessageCard(){
-    JetpackTheme{
-        MessageCard(
-            msg = Message("Colleague", "Hey, take a look at Jetpack Compose, it's great!")
-        )
+    var userName by remember {
+        mutableStateOf("")
     }
-}*/
+    var password by remember {
+        mutableStateOf("")
+    }
+
+    var isPasswordVisible by remember {
+        mutableStateOf(false)
+    }
+    JetpackTheme{
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            TextField(
+                value = userName,
+                onValueChange = {userName = it},
+                label = { Text(text = "Username")},
+                singleLine = true,
+                trailingIcon = {
+                    IconButton(onClick = { userName = "" }) {
+                        Icon(imageVector = Icons.Filled.Clear, contentDescription = "")
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+
+            OutlinedTextField(
+                value = password,
+                onValueChange = {password = it},
+                label = { Text(text = "Password")},
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            contentDescription = "Password Toggle"
+                        )
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.height(35.dp))
+            GoogleButton(
+                text = "Sign Up with Google",
+                loadingText = "Creating Account...",
+                onClicked = {
+                    Log.i("Google button", "Clicked")
+                }
+            )
+            Spacer(modifier = Modifier.height(18.dp))
+
+            FacebookButton(
+                text = "Sign Up with Facebook",
+                loadingText = "Creating an account...",
+                onClicked = {
+                    Log.i("Facebook button", "Clicked")
+                }
+            )
+        }
+    }
+}

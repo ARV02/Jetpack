@@ -31,8 +31,9 @@ fun FacebookButton(
     Surface(
         onClick = {clicked= ! clicked},
         shape = Shapes.medium,
-        border = BorderStroke(width = 1.dp, color = Color.Gray),
-        color = MaterialTheme.colors.surface
+        border = BorderStroke(width = 1.dp, color = Color(0xFF1976D2)),
+        color = Color(0xFF1976D2),
+        contentColor = Color(0xFFFFFFFF)
     ) {
         Row (
             modifier = Modifier
@@ -56,7 +57,7 @@ fun FacebookButton(
                 tint = Color.Unspecified
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Text(text = if (clicked) loadingText else text)
+            Text( text = if (clicked) loadingText else text)
             if (clicked){
                 CircularProgressIndicator(
                     modifier = Modifier

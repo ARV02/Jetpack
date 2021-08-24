@@ -29,6 +29,7 @@ fun GoogleButton(
 ){
     var clicked by remember { mutableStateOf(false) }
     Surface(
+        modifier = Modifier.fillMaxWidth(),
         onClick = {clicked = ! clicked},
         shape = Shapes.medium,
         border = BorderStroke(width = 1.dp, color = Color.LightGray),
